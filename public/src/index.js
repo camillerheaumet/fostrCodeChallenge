@@ -98,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function() {
     return `<span>Ingredients:</span><br/>
       <ul class="ingredients">
         ${recipe.ingredients.map(ingredient => {
-          const regex = /[0-9]+[\s][0-9]*[/|.][0-9]+|[0-9]+[/|.][0-9]+|[0-9]+[\s](?!inches)+/g
+          const regex = /[0-9]+[\s][0-9]*[/|.][0-9]+|[0-9]+[/|.][0-9]+|[0-9]+[\s](?!inch)+/g
           const quantities = ingredient.match(regex)
 
           let finalIngredient = ingredient;
@@ -113,7 +113,6 @@ document.addEventListener("DOMContentLoaded", function() {
                 return (multiplier * curr) + acc
               }, 0)
               finalIngredient = finalIngredient.replace(quantity, `${numberToFraction(newQuantity)} `)
-
             })
           }
 
@@ -149,6 +148,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 var numberToFraction = function( amount ) {
+  let thirdCheck = amount.toString().split(".")
+  const thirdCheckInteger = parseInt(thirdCheck[0]) > 0 ? `${thirdCheck[0]} ` : ''
+  if (thirdCheck[1] === '3333333333333333') {
+    return thirdCheckInteger + '1/3'
+  } else if (thirdCheck[1] === '6666666666666666') {
+    return thirdCheckInteger + '2/3'
+  }
+
 	if ( parseFloat( amount ) === parseInt( amount ) ) {
 		return amount;
 	}
